@@ -12,6 +12,7 @@ const signedMoney = (value) => {
   if (number < 0) return `- ${money(Math.abs(number))}`;
   return money(0);
 };
+const formatDate = (value) => (value ? new Date(value).toLocaleDateString() : "-");
 
 const RoomBills = () => {
   const [rooms, setRooms] = useState([]);
@@ -33,6 +34,7 @@ const RoomBills = () => {
   const selectedBill = useMemo(() => bills.find((bill) => bill._id === selectedBillId) || bills[0], [bills, selectedBillId]);
   const receivedAmount = Number(payment.receivedAmount || 0);
   const fullBalance = Number(selectedBill?.currentBalance || 0);
+  const selectedBillPaid = selectedBill?.paymentStatus === "Paid" || fullBalance <= 0;
   const overpaymentAmount = Math.max(receivedAmount - fullBalance, 0);
   const changeAmount = payment.overPaymentAction === "Give Change" ? overpaymentAmount : 0;
   const carryForwardAmount = payment.overPaymentAction === "Carry Forward" ? overpaymentAmount : 0;
@@ -102,19 +104,23 @@ const RoomBills = () => {
       <div className="grid gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
         <section className="panel">
           <h3 className="mb-3 text-lg font-black">Select Room</h3>
-          <div className="grid gap-2">
-            {rooms.map((room) => (
-              <button
-                key={room._id}
-                type="button"
-                className={`flex items-center justify-between rounded-lg border p-3 text-left ${selectedRoomId === room._id ? "border-leaf bg-mint" : "border-[#dfe8e2] bg-white"}`}
-                onClick={() => setSelectedRoomId(room._id)}
-              >
-                <span className="font-black">{room.roomNumber}</span>
-                <span className="text-sm text-slate-600">{room.status}</span>
-              </button>
-            ))}
-          </div>
+          <label className="field">
+            <span>Select Room</span>
+            <select className="input" value={selectedRoomId} onChange={(e) => setSelectedRoomId(e.target.value)}>
+              <option value="">Select room</option>
+              {rooms.map((room) => (
+                <option key={room._id} value={room._id}>
+                  Room {room.roomNumber} - {room.status}
+                </option>
+              ))}
+            </select>
+          </label>
+          {selectedRoom && (
+            <div className="mt-4 rounded-lg border border-[#dfe8e2] bg-[#f7faf6] p-3">
+              <p className="font-black">Room {selectedRoom.roomNumber}</p>
+              <p className="text-sm text-slate-600">{selectedRoom.status} - Rent {money(selectedRoom.monthlyRent)}</p>
+            </div>
+          )}
         </section>
 
         <div className="grid gap-5">
@@ -145,7 +151,7 @@ const RoomBills = () => {
                   <div className="stat-card"><div><p className="stat-title">Status</p><div className="mt-3"><BillStatusBadge status={selectedBill.paymentStatus} /></div></div></div>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <button className="btn" type="button" onClick={() => setShowPayment((value) => !value)}><Banknote size={18} />Pay</button>
+                  <button className="btn" type="button" disabled={selectedBillPaid} onClick={() => setShowPayment((value) => !value)}><Banknote size={18} />{selectedBillPaid ? "Paid" : "Pay"}</button>
                   <button className="btn secondary" type="button" onClick={() => printBill(selectedBill)}><Printer size={18} />Print</button>
                 </div>
               </>
@@ -154,7 +160,7 @@ const RoomBills = () => {
             )}
           </section>
 
-          {showPayment && selectedBill && (
+          {showPayment && selectedBill && !selectedBillPaid && (
             <form className="panel form-grid" onSubmit={addPayment}>
               <div className="field full">
                 <h3 className="text-lg font-black">Pay Room {selectedBill.roomNumber} Bill</h3>
@@ -190,7 +196,7 @@ const RoomBills = () => {
             <h3 className="mb-3 text-lg font-black">Previous Room Bills</h3>
             <div className="table-wrap">
               <table className="data-table mobile-cards">
-                <thead><tr><th>Month</th><th>Monthly Rent</th><th>Electricity Fee</th><th>Previous Balance (+/-)</th><th>Total</th><th>Paid</th><th>Balance/Credit</th><th>Status</th><th>Action</th></tr></thead>
+                <thead><tr><th>Month</th><th>Monthly Rent</th><th>Electricity Fee</th><th>Previous Balance (+/-)</th><th>Total</th><th>Paid</th><th>Balance/Credit</th><th>Status</th><th>Paid Date</th><th>Action</th></tr></thead>
                 <tbody>
                   {bills.map((bill) => (
                     <tr key={bill._id}>
@@ -202,10 +208,11 @@ const RoomBills = () => {
                       <td data-label="Paid">{money(bill.totalPaidAmount)}</td>
                       <td data-label="Balance/Credit">{signedMoney(bill.currentBalance)}</td>
                       <td data-label="Status"><BillStatusBadge status={bill.paymentStatus} /></td>
+                      <td data-label="Paid Date">{bill.paymentStatus === "Paid" ? formatDate(bill.paidDate) : "-"}</td>
                       <td data-label="Action"><button className="btn secondary" type="button" onClick={() => { setSelectedBillId(bill._id); setShowPayment(false); }}>View</button></td>
                     </tr>
                   ))}
-                  {!bills.length && <tr><td colSpan="9">No bills found for this room.</td></tr>}
+                  {!bills.length && <tr><td colSpan="10">No bills found for this room.</td></tr>}
                 </tbody>
               </table>
             </div>

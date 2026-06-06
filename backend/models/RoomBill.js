@@ -17,6 +17,7 @@ const roomBillSchema = new mongoose.Schema(
     totalPaidAmount: { type: Number, default: 0, min: 0 },
     currentBalance: { type: Number, required: true },
     paymentStatus: { type: String, enum: ["Paid", "Partially Paid", "Unpaid"], default: "Unpaid" },
+    paidDate: { type: Date, default: null },
     note: { type: String, default: "" }
   },
   { timestamps: true }

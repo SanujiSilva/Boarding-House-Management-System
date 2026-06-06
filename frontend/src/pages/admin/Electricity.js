@@ -76,19 +76,23 @@ const Electricity = () => {
       <div className="grid gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
         <section className="panel">
           <h3 className="mb-3 text-lg font-black">Rooms</h3>
-          <div className="grid gap-2">
-            {rooms.map((room) => (
-              <button
-                key={room._id}
-                type="button"
-                className={`flex items-center justify-between rounded-lg border p-3 text-left ${selectedRoomId === room._id ? "border-leaf bg-mint" : "border-[#dfe8e2] bg-white"}`}
-                onClick={() => setSelectedRoomId(room._id)}
-              >
-                <span className="font-black">{room.roomNumber}</span>
-                <span className="text-sm text-slate-600">{room.status}</span>
-              </button>
-            ))}
-          </div>
+          <label className="field">
+            <span>Select Room</span>
+            <select className="input" value={selectedRoomId} onChange={(e) => setSelectedRoomId(e.target.value)}>
+              <option value="">Select room</option>
+              {rooms.map((room) => (
+                <option key={room._id} value={room._id}>
+                  Room {room.roomNumber} - {room.status}
+                </option>
+              ))}
+            </select>
+          </label>
+          {selectedRoom && (
+            <div className="mt-4 rounded-lg border border-[#dfe8e2] bg-[#f7faf6] p-3">
+              <p className="font-black">Room {selectedRoom.roomNumber}</p>
+              <p className="text-sm text-slate-600">{selectedRoom.status} - Rent {money(selectedRoom.monthlyRent)}</p>
+            </div>
+          )}
         </section>
 
         <div className="grid gap-5">

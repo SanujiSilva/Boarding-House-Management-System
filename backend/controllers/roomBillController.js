@@ -49,6 +49,29 @@ const buildBill = async (room, month, year, note = "") => {
   return { skipped: false, bill };
 };
 
+const addPaidDates = async (bills) => {
+  const billList = Array.isArray(bills) ? bills : [bills];
+  const idsNeedingPaidDate = billList
+    .filter((bill) => bill.paymentStatus === "Paid" && !bill.paidDate)
+    .map((bill) => bill._id);
+
+  const payments = idsNeedingPaidDate.length
+    ? await Payment.find({ roomBillId: { $in: idsNeedingPaidDate } }).sort({ paymentDate: -1 })
+    : [];
+
+  const latestPaymentByBill = payments.reduce((map, payment) => {
+    const key = payment.roomBillId.toString();
+    if (!map[key]) map[key] = payment.paymentDate;
+    return map;
+  }, {});
+
+  return billList.map((bill) => {
+    const item = bill.toObject ? bill.toObject() : bill;
+    item.paidDate = item.paidDate || latestPaymentByBill[item._id.toString()] || null;
+    return item;
+  });
+};
+
 const generateRoomBill = async (req, res) => {
   const { roomId, month, year, note } = req.body;
   const room = await Room.findById(roomId);
@@ -80,24 +103,25 @@ const getRoomBills = async (req, res) => {
   if (req.query.year) filter.year = Number(req.query.year);
   if (req.query.roomId) filter.roomId = req.query.roomId;
   const bills = await RoomBill.find(filter).sort({ year: -1, month: -1, roomNumber: 1 });
-  res.json(bills);
+  res.json(await addPaidDates(bills));
 };
 
 const getRoomBill = async (req, res) => {
   const bill = await RoomBill.findById(req.params.id);
   if (!bill) return res.status(404).json({ message: "Room bill not found" });
   const payments = await Payment.find({ roomBillId: bill._id }).sort({ paymentDate: -1 });
-  res.json({ bill, payments });
+  const [billWithPaidDate] = await addPaidDates([bill]);
+  res.json({ bill: billWithPaidDate, payments });
 };
 
 const getRoomBillsByRoom = async (req, res) => {
   const bills = await RoomBill.find({ roomId: req.params.roomId }).sort({ year: -1, month: -1 });
-  res.json(bills);
+  res.json(await addPaidDates(bills));
 };
 
 const getRoomBillsByMonth = async (req, res) => {
   const bills = await RoomBill.find({ month: Number(req.params.month), year: Number(req.params.year) }).sort({ roomNumber: 1 });
-  res.json(bills);
+  res.json(await addPaidDates(bills));
 };
 
 module.exports = { generateRoomBill, generateAllRoomBills, getRoomBills, getRoomBill, getRoomBillsByRoom, getRoomBillsByMonth, getPaymentStatus };
