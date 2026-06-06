@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Building2, Eye, EyeOff, LogIn } from "lucide-react";
+import { Building2, CalendarDays, Eye, EyeOff, KeyRound, LogIn, ShieldCheck, Sparkles } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
@@ -32,42 +32,76 @@ const Login = ({ role = "admin" }) => {
   };
 
   return (
-    <main className="min-h-screen bg-[#f6f8f4] grid place-items-center p-5">
-      <section className="grid w-full max-w-5xl overflow-hidden rounded-lg border border-[#dfe8e2] bg-white shadow-xl md:grid-cols-[1fr_420px]">
-        <div className="relative min-h-[520px] bg-[#17211b] p-8 text-white">
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "linear-gradient(135deg, #d3a42f 0 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
-          <div className="relative z-10 flex h-full flex-col justify-between">
-            <div className="brand">
+    <main className="auth-page">
+      <div className="auth-glow gold" />
+      <div className="auth-glow green" />
+      <section className="auth-shell two-column">
+        <div className="auth-hero">
+          <div className="auth-hero-content">
+            <div className="auth-brand">
               <div className="brand-mark">BH</div>
               <div>
-                <h1>Boarding House Management System</h1>
-                <p>Room billing, payments, boarders</p>
+                <div className="auth-kicker">{isAdmin ? "Admin portal" : "Boarder portal"}</div>
+                <h1 style={{ marginTop: 14, fontSize: 22 }}>Boarding House Management System</h1>
+                <p>{isAdmin ? "Room billing, boarders, payments, and reports in one workspace." : "A simple portal for your bills, payments, and personal room details."}</p>
               </div>
             </div>
+
             <div>
-              <Building2 size={56} className="mb-5 text-[#d3a42f]" />
-              <h2 className="max-w-lg text-4xl font-black leading-tight">
-                {isAdmin ? "Admin workspace for rooms, bills, boarders, and payments." : "Boarder access for room bills, payments, and contact details."}
-              </h2>
-              <p className="mt-4 max-w-md text-[#c8d8ce]">{isAdmin ? "Default admin: admin / admin123" : "Use your email as username and phone number as password."}</p>
+              <h2>{isAdmin ? "Manage the entire house from a focused dashboard." : "Check your room records without the clutter."}</h2>
+              <p style={{ marginTop: 18, maxWidth: 560, fontSize: 16, lineHeight: 1.7 }}>
+                {isAdmin
+                  ? "Keep occupancy, bills, and payment records in sync while moving quickly through your daily tasks."
+                  : "Use your email as the username and your phone number as the password to access your room information."}
+              </p>
+            </div>
+
+            <div className="auth-proof">
+              <div className="auth-proof-grid">
+                <div className="auth-proof-card">
+                  <ShieldCheck size={18} style={{ marginBottom: 10 }} />
+                  <strong>Secure</strong>
+                  <span>Role-based login keeps access separated.</span>
+                </div>
+                <div className="auth-proof-card">
+                  <CalendarDays size={18} style={{ marginBottom: 10 }} />
+                  <strong>Timed</strong>
+                  <span>See registered dates and bill timelines.</span>
+                </div>
+                <div className="auth-proof-card">
+                  <Sparkles size={18} style={{ marginBottom: 10 }} />
+                  <strong>Clear</strong>
+                  <span>A cleaner surface for fast everyday use.</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <form onSubmit={submit} className="grid content-center gap-4 p-8">
-          <div>
-            <h2 className="text-2xl font-black">{isAdmin ? "Admin Login" : "Boarder Login"}</h2>
-            <p className="mt-1 text-sm text-slate-600">{isAdmin ? "Sign in to manage the boarding house." : "Use email as username and phone number as password."}</p>
+
+        <form onSubmit={submit} className="auth-card">
+          <div className="auth-card-header">
+            <div className="auth-portal-meta">
+              <KeyRound size={14} />
+              Protected access
+            </div>
+            <div>
+              <h2 className="auth-title" style={{ fontSize: 32, background: "linear-gradient(135deg, #6ba88f 0%, #507568 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{isAdmin ? "Admin Login" : "Boarder Login"}</h2>
+              <p>{isAdmin ? "Sign in to manage the boarding house." : "Sign in to view your boarder information."}</p>
+            </div>
           </div>
+
           {error && <div className="error">{error}</div>}
+
           <label className="field">
             <span>{isAdmin ? "Username" : "Email"}</span>
             <input className="input" type={isAdmin ? "text" : "email"} value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} required />
           </label>
+
           <label className="field">
             <span>{isAdmin ? "Password" : "Phone Number"}</span>
-            <div className="relative">
+            <div className="input-wrap">
               <input
-                className="input pr-12"
+                className="input with-icon"
                 type={showPassword ? "text" : "password"}
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -75,7 +109,7 @@ const Login = ({ role = "admin" }) => {
               />
               <button
                 type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-leaf"
+                className="input-icon-btn"
                 onClick={() => setShowPassword((prev) => !prev)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 title={showPassword ? "Hide password" : "Show password"}
@@ -84,11 +118,13 @@ const Login = ({ role = "admin" }) => {
               </button>
             </div>
           </label>
+
           <button className="btn" disabled={loading}>
             <LogIn size={18} />
             {loading ? "Signing in..." : "Login"}
           </button>
-          <Link className="text-sm font-bold text-leaf" to={isAdmin ? "/customer/login" : "/admin/login"}>
+
+          <Link className="text-sm font-bold" style={{ color: "#6ba88f" }} to={isAdmin ? "/customer/login" : "/admin/login"}>
             {isAdmin ? "Boarder login" : "Admin login"}
           </Link>
         </form>

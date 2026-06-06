@@ -20,14 +20,14 @@ const Customers = () => {
   return (
     <>
       <div className="page-title">
-        <div><h2>Boarders</h2><p>Each boarder is shown as a separate room member.</p></div>
+        <div><h2 style={{ background: "linear-gradient(135deg, #6ba88f 0%, #507568 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Boarders</h2><p>Each boarder is shown as a separate room member.</p></div>
         <Link className="btn" to="/admin/customers/add"><UserRoundPlus size={18} />Register Boarder</Link>
       </div>
       <section className="panel">
         <div className="mb-4 flex flex-wrap gap-2">
           <input className="input max-w-sm" placeholder="Search boarders" value={search} onChange={(e) => setSearch(e.target.value)} />
           <button className="btn secondary" onClick={load}><Search size={18} />Search</button>
-          <div className="flex rounded-lg border border-[#cad8cf] bg-white p-1">
+          <div className="flex rounded-lg border" style={{ borderColor: "rgba(148, 163, 153, 0.35)", background: "white", padding: "4px" }}>
             {[
               ["active", "Current Members"],
               ["previous", "Previous Members"],
@@ -36,7 +36,20 @@ const Customers = () => {
               <button
                 key={value}
                 type="button"
-                className={`rounded-md px-3 py-2 text-sm font-bold ${status === value ? "bg-leaf text-white" : "text-slate-700"}`}
+                style={{
+                  borderRadius: "8px",
+                  paddingLeft: "12px",
+                  paddingRight: "12px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  background: status === value ? "linear-gradient(135deg, #6ba88f 0%, #507568 100%)" : "transparent",
+                  color: status === value ? "white" : "#5a6a5f",
+                  border: "0",
+                  cursor: "pointer",
+                  transition: "all 200ms cubic-bezier(0.4, 0, 0.2, 1)"
+                }}
                 onClick={() => setStatus(value)}
               >
                 {label}
@@ -54,7 +67,7 @@ const Customers = () => {
                   <td>{customer.roomNumber}</td>
                   <td>{customer.phoneNumber}</td>
                   <td>{customer.nicNumber}</td>
-                  <td>{customer.isActive ? "Active" : "Inactive"}</td>
+                  <td><span style={{ display: "inline-flex", borderRadius: "20px", paddingLeft: "12px", paddingRight: "12px", paddingTop: "6px", paddingBottom: "6px", fontSize: "13px", fontWeight: "900", background: customer.isActive ? "linear-gradient(135deg, rgba(107, 168, 143, 0.15) 0%, rgba(90, 154, 126, 0.1) 100%)" : "linear-gradient(135deg, rgba(229, 231, 235, 0.5) 0%, rgba(209, 213, 219, 0.4) 100%)", color: customer.isActive ? "#6ba88f" : "#757f7a", border: customer.isActive ? "1px solid rgba(107, 168, 143, 0.25)" : "1px solid rgba(157, 166, 161, 0.3)" }}>{customer.isActive ? "Active" : "Inactive"}</span></td>
                   <td>
                     <div className="flex gap-2">
                       <Link className="btn secondary" title="View boarder" to={`/admin/customers/${customer._id}`}><Eye size={16} /></Link>
