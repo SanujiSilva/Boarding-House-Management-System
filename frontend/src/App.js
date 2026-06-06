@@ -16,6 +16,8 @@ import RoomBills from "./pages/admin/RoomBills";
 import GenerateRoomBill from "./pages/admin/GenerateRoomBill";
 import Payments from "./pages/admin/Payments";
 import Reports from "./pages/admin/Reports";
+import Admins from "./pages/admin/Admins";
+import AdminProfile from "./pages/admin/AdminProfile";
 import CustomerDashboard from "./pages/customer/CustomerDashboard";
 import MyRoomBills from "./pages/customer/MyRoomBills";
 import PaymentHistory from "./pages/customer/PaymentHistory";
@@ -38,6 +40,8 @@ const AdminLayout = () => (
         <Route path="room-bills/generate" element={<GenerateRoomBill />} />
         <Route path="payments" element={<Payments />} />
         <Route path="reports" element={<Reports />} />
+        <Route path="admins" element={<Admins />} />
+        <Route path="profile" element={<AdminProfile />} />
         <Route path="*" element={<Navigate to="dashboard" replace />} />
       </Routes>
     </main>

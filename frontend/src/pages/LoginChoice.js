@@ -57,7 +57,7 @@ const LoginChoice = () => (
 
         <div className="auth-portal-grid">
           <Link className="auth-portal-link" to="/admin/login">
-            <div style={{ color: "transparent", background: "linear-gradient(135deg, #6ba88f 0%, #507568 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}><ShieldCheck size={34} style={{ color: "#6ba88f" }} /></div>
+            <div style={{ color: "var(--green)" }}><ShieldCheck size={34} /></div>
             <div>
               <h2>Admin Login</h2>
               <p>Manage rooms, boarders, electricity, bills, payments, and reports.</p>
@@ -65,7 +65,7 @@ const LoginChoice = () => (
           </Link>
 
           <Link className="auth-portal-link" to="/customer/login">
-            <div style={{ color: "transparent", background: "linear-gradient(135deg, #6ba88f 0%, #507568 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}><UserRound size={34} style={{ color: "#6ba88f" }} /></div>
+            <div style={{ color: "var(--green)" }}><UserRound size={34} /></div>
             <div>
               <h2>Boarder Login</h2>
               <p>View room bills, payment history, and update contact numbers.</p>

@@ -85,7 +85,7 @@ const Login = ({ role = "admin" }) => {
               Protected access
             </div>
             <div>
-              <h2 className="auth-title" style={{ fontSize: 32, background: "linear-gradient(135deg, #6ba88f 0%, #507568 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{isAdmin ? "Admin Login" : "Boarder Login"}</h2>
+              <h2 className="auth-title">{isAdmin ? "Admin Login" : "Boarder Login"}</h2>
               <p>{isAdmin ? "Sign in to manage the boarding house." : "Sign in to view your boarder information."}</p>
             </div>
           </div>
@@ -124,7 +124,7 @@ const Login = ({ role = "admin" }) => {
             {loading ? "Signing in..." : "Login"}
           </button>
 
-          <Link className="text-sm font-bold" style={{ color: "#6ba88f" }} to={isAdmin ? "/customer/login" : "/admin/login"}>
+          <Link className="text-sm font-bold" style={{ color: "var(--green)" }} to={isAdmin ? "/customer/login" : "/admin/login"}>
             {isAdmin ? "Boarder login" : "Admin login"}
           </Link>
         </form>

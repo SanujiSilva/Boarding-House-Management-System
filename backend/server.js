@@ -15,6 +15,7 @@ const roomBillRoutes = require("./routes/roomBillRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const customerPortalRoutes = require("./routes/customerPortalRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const adminUserRoutes = require("./routes/adminUserRoutes");
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/api/admin/electricity", electricityRoutes);
 app.use("/api/admin/room-bills", roomBillRoutes);
 app.use("/api/admin/payments", paymentRoutes);
 app.use("/api/admin", dashboardRoutes);
+app.use("/api/admin", adminUserRoutes);
 app.use("/api/customer", customerPortalRoutes);
 
 app.use((err, req, res, next) => {
@@ -68,4 +70,3 @@ start().catch((error) => {
   console.error(error);
   process.exit(1);
 });
-

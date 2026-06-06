@@ -1,4 +1,4 @@
-import { Building2, Gauge, Home, LogOut, Receipt, UserRoundPlus, UsersRound, WalletCards, ChartColumn } from "lucide-react";
+import { Building2, ChartColumn, Gauge, Home, LogOut, Receipt, ShieldCheck, UserRound, UserRoundPlus, UsersRound, WalletCards } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const items = [
@@ -9,7 +9,9 @@ const items = [
   { to: "/admin/electricity", label: "Electricity", icon: Building2 },
   { to: "/admin/room-bills", label: "Room Bills", icon: Receipt },
   { to: "/admin/payments", label: "Payments", icon: WalletCards },
-  { to: "/admin/reports", label: "Reports", icon: ChartColumn }
+  { to: "/admin/reports", label: "Reports", icon: ChartColumn },
+  { to: "/admin/admins", label: "Admins", icon: ShieldCheck },
+  { to: "/admin/profile", label: "Profile", icon: UserRound }
 ];
 
 const AdminSidebar = () => {
