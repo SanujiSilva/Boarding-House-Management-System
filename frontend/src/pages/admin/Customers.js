@@ -58,17 +58,17 @@ const Customers = () => {
           </div>
         </div>
         <div className="table-wrap">
-          <table className="data-table">
+          <table className="data-table mobile-cards">
             <thead><tr><th>Boarder</th><th>Room</th><th>Phone</th><th>NIC</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody>
               {customers.map((customer) => (
                 <tr key={customer._id}>
-                  <td>{customer.name}</td>
-                  <td>{customer.roomNumber}</td>
-                  <td>{customer.phoneNumber}</td>
-                  <td>{customer.nicNumber}</td>
-                  <td><span style={{ display: "inline-flex", borderRadius: "20px", paddingLeft: "12px", paddingRight: "12px", paddingTop: "6px", paddingBottom: "6px", fontSize: "13px", fontWeight: "900", background: customer.isActive ? "linear-gradient(135deg, rgba(107, 168, 143, 0.15) 0%, rgba(90, 154, 126, 0.1) 100%)" : "linear-gradient(135deg, rgba(229, 231, 235, 0.5) 0%, rgba(209, 213, 219, 0.4) 100%)", color: customer.isActive ? "#6ba88f" : "#757f7a", border: customer.isActive ? "1px solid rgba(107, 168, 143, 0.25)" : "1px solid rgba(157, 166, 161, 0.3)" }}>{customer.isActive ? "Active" : "Inactive"}</span></td>
-                  <td>
+                  <td data-label="Boarder">{customer.name}</td>
+                  <td data-label="Room">{customer.roomNumber}</td>
+                  <td data-label="Phone">{customer.phoneNumber}</td>
+                  <td data-label="NIC">{customer.nicNumber}</td>
+                  <td data-label="Status"><span style={{ display: "inline-flex", borderRadius: "20px", paddingLeft: "12px", paddingRight: "12px", paddingTop: "6px", paddingBottom: "6px", fontSize: "13px", fontWeight: "900", background: customer.isActive ? "linear-gradient(135deg, rgba(107, 168, 143, 0.15) 0%, rgba(90, 154, 126, 0.1) 100%)" : "linear-gradient(135deg, rgba(229, 231, 235, 0.5) 0%, rgba(209, 213, 219, 0.4) 100%)", color: customer.isActive ? "#6ba88f" : "#757f7a", border: customer.isActive ? "1px solid rgba(107, 168, 143, 0.25)" : "1px solid rgba(157, 166, 161, 0.3)" }}>{customer.isActive ? "Active" : "Inactive"}</span></td>
+                  <td data-label="Actions">
                     <div className="flex gap-2">
                       <Link className="btn secondary" title="View boarder" to={`/admin/customers/${customer._id}`}><Eye size={16} /></Link>
                       <Link className="btn secondary" title="Edit boarder" to={`/admin/customers/edit/${customer._id}`}><Pencil size={16} /></Link>

@@ -43,15 +43,15 @@ const Admins = () => {
       <section className="panel">
         <h3 className="mb-3 text-lg font-black">Existing Admins</h3>
         <div className="table-wrap">
-          <table className="data-table">
+          <table className="data-table mobile-cards">
             <thead><tr><th>Name</th><th>Username</th><th>Status</th><th>Created</th></tr></thead>
             <tbody>
               {admins.map((admin) => (
                 <tr key={admin._id}>
-                  <td><div className="flex items-center gap-2"><ShieldCheck size={16} />{admin.name}</div></td>
-                  <td>{admin.username}</td>
-                  <td>{admin.isActive ? "Active" : "Inactive"}</td>
-                  <td>{new Date(admin.createdAt).toLocaleDateString()}</td>
+                  <td data-label="Name"><div className="flex items-center gap-2"><ShieldCheck size={16} />{admin.name}</div></td>
+                  <td data-label="Username">{admin.username}</td>
+                  <td data-label="Status">{admin.isActive ? "Active" : "Inactive"}</td>
+                  <td data-label="Created">{new Date(admin.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -63,4 +63,3 @@ const Admins = () => {
 };
 
 export default Admins;
-

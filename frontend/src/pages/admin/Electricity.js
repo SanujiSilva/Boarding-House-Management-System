@@ -129,12 +129,12 @@ const Electricity = () => {
           <section className="panel">
             <h3 className="mb-3 text-lg font-black">Previous Electricity Bills</h3>
             <div className="table-wrap">
-              <table className="data-table">
+              <table className="data-table mobile-cards">
                 <thead><tr><th>Month</th><th>Year</th><th>Previous</th><th>Current</th><th>Units</th><th>Unit Price</th><th>Electricity Bill</th></tr></thead>
                 <tbody>
                   {records.map((r) => (
                     <tr key={r._id}>
-                      <td>{monthLabel(r.month)}</td><td>{r.year}</td><td>{r.previousMeterReading}</td><td>{r.currentMeterReading}</td><td>{r.usedUnits}</td><td>{money(r.unitPrice)}</td><td>{money(r.electricityBill)}</td>
+                      <td data-label="Month">{monthLabel(r.month)}</td><td data-label="Year">{r.year}</td><td data-label="Previous">{r.previousMeterReading}</td><td data-label="Current">{r.currentMeterReading}</td><td data-label="Units">{r.usedUnits}</td><td data-label="Unit Price">{money(r.unitPrice)}</td><td data-label="Electricity Bill">{money(r.electricityBill)}</td>
                     </tr>
                   ))}
                   {!records.length && <tr><td colSpan="7">No electricity records for this room yet.</td></tr>}

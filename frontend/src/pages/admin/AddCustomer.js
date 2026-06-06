@@ -156,20 +156,20 @@ const AddCustomer = () => {
         <section className="panel mb-5">
           <h3 className="mb-3 text-lg font-black">Boarders In This Room</h3>
           <div className="table-wrap">
-            <table className="data-table">
+            <table className="data-table mobile-cards">
               <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>WhatsApp</th><th>NIC</th><th>Relationship</th><th>Job</th><th>Registered Date</th><th>Status</th></tr></thead>
               <tbody>
                 {roomBoarders.map((boarder) => (
                   <tr key={boarder._id}>
-                    <td>{boarder.name}</td>
-                    <td>{boarder.email || boarder.userId?.username || "-"}</td>
-                    <td>{boarder.phoneNumber}</td>
-                    <td>{boarder.whatsappNumber || "-"}</td>
-                    <td>{boarder.nicNumber}</td>
-                    <td>{boarder.relationship || "-"}</td>
-                    <td>{boarder.job || "-"}</td>
-                    <td>{formatDate(boarder.createdAt)}</td>
-                    <td>{boarder.isActive ? "Active" : "Inactive"}</td>
+                    <td data-label="Name">{boarder.name}</td>
+                    <td data-label="Email">{boarder.email || boarder.userId?.username || "-"}</td>
+                    <td data-label="Phone">{boarder.phoneNumber}</td>
+                    <td data-label="WhatsApp">{boarder.whatsappNumber || "-"}</td>
+                    <td data-label="NIC">{boarder.nicNumber}</td>
+                    <td data-label="Relationship">{boarder.relationship || "-"}</td>
+                    <td data-label="Job">{boarder.job || "-"}</td>
+                    <td data-label="Registered Date">{formatDate(boarder.createdAt)}</td>
+                    <td data-label="Status">{boarder.isActive ? "Active" : "Inactive"}</td>
                   </tr>
                 ))}
                 {!roomBoarders.length && <tr><td colSpan="9">No boarders registered in this room yet.</td></tr>}

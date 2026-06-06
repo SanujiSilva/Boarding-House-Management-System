@@ -58,7 +58,7 @@ const Rooms = () => {
         {/* Rooms Table */}
         {rooms.length > 0 ? (
           <div className="table-wrap">
-            <table className="data-table">
+            <table className="data-table mobile-cards">
               <thead>
                 <tr>
                   <th>Room</th>
@@ -72,12 +72,12 @@ const Rooms = () => {
               <tbody>
                 {rooms.map((room) => (
                   <tr key={room._id}>
-                    <td className="font-semibold">{editing?._id === room._id ? <input className="input" value={editing.roomNumber} onChange={(e) => setEditing({ ...editing, roomNumber: e.target.value })} /> : room.roomNumber}</td>
-                    <td>{editing?._id === room._id ? <input className="input" type="number" value={editing.monthlyRent} onChange={(e) => setEditing({ ...editing, monthlyRent: e.target.value })} /> : money(room.monthlyRent)}</td>
-                    <td>{editing?._id === room._id ? <input className="input" value={editing.description || ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} /> : room.description || "-"}</td>
-                    <td>{editing?._id === room._id ? <input className="input" type="number" value={editing.maxBoarders} onChange={(e) => setEditing({ ...editing, maxBoarders: e.target.value })} /> : `${room.currentBoarders}/${room.maxBoarders}`}</td>
-                    <td><span style={{ display: "inline-flex", borderRadius: "20px", paddingLeft: "12px", paddingRight: "12px", paddingTop: "6px", paddingBottom: "6px", fontSize: "13px", fontWeight: "900", background: room.status === 'Available' ? "linear-gradient(135deg, rgba(107, 168, 143, 0.15) 0%, rgba(90, 154, 126, 0.1) 100%)" : "linear-gradient(135deg, rgba(201, 169, 97, 0.15) 0%, rgba(172, 143, 74, 0.1) 100%)", color: room.status === 'Available' ? "#6ba88f" : "#c9a961", border: room.status === 'Available' ? "1px solid rgba(107, 168, 143, 0.25)" : "1px solid rgba(201, 169, 97, 0.25)" }}>{room.status}</span></td>
-                    <td>
+                    <td className="font-semibold" data-label="Room">{editing?._id === room._id ? <input className="input" value={editing.roomNumber} onChange={(e) => setEditing({ ...editing, roomNumber: e.target.value })} /> : room.roomNumber}</td>
+                    <td data-label="Monthly Rent">{editing?._id === room._id ? <input className="input" type="number" value={editing.monthlyRent} onChange={(e) => setEditing({ ...editing, monthlyRent: e.target.value })} /> : money(room.monthlyRent)}</td>
+                    <td data-label="Description">{editing?._id === room._id ? <input className="input" value={editing.description || ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} /> : room.description || "-"}</td>
+                    <td data-label="Capacity">{editing?._id === room._id ? <input className="input" type="number" value={editing.maxBoarders} onChange={(e) => setEditing({ ...editing, maxBoarders: e.target.value })} /> : `${room.currentBoarders}/${room.maxBoarders}`}</td>
+                    <td data-label="Status"><span style={{ display: "inline-flex", borderRadius: "20px", paddingLeft: "12px", paddingRight: "12px", paddingTop: "6px", paddingBottom: "6px", fontSize: "13px", fontWeight: "900", background: room.status === 'Available' ? "linear-gradient(135deg, rgba(107, 168, 143, 0.15) 0%, rgba(90, 154, 126, 0.1) 100%)" : "linear-gradient(135deg, rgba(201, 169, 97, 0.15) 0%, rgba(172, 143, 74, 0.1) 100%)", color: room.status === 'Available' ? "#6ba88f" : "#c9a961", border: room.status === 'Available' ? "1px solid rgba(107, 168, 143, 0.25)" : "1px solid rgba(201, 169, 97, 0.25)" }}>{room.status}</span></td>
+                    <td data-label="Actions">
                       {editing?._id === room._id ? (
                         <button className="btn" onClick={save}>Save</button>
                       ) : (

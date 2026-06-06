@@ -38,7 +38,7 @@ const AdminDashboard = () => {
         </div>
         {(data?.roomsWithUnpaidBills || []).length > 0 ? (
           <div className="table-wrap">
-            <table className="data-table">
+            <table className="data-table mobile-cards">
               <thead>
                 <tr>
                   <th>Room</th>
@@ -51,11 +51,11 @@ const AdminDashboard = () => {
               <tbody>
                 {(data?.roomsWithUnpaidBills || []).map((bill) => (
                   <tr key={bill._id}>
-                    <td className="font-semibold" style={{ color: "#6ba88f" }}>{bill.roomNumber}</td>
-                    <td>{bill.customerName}</td>
-                    <td>{money(bill.totalBill)}</td>
-                    <td className="font-semibold" style={{ color: "#d97d6e" }}>{money(bill.currentBalance)}</td>
-                    <td>
+                    <td className="font-semibold" data-label="Room" style={{ color: "#6ba88f" }}>{bill.roomNumber}</td>
+                    <td data-label="Boarder">{bill.customerName}</td>
+                    <td data-label="Total Bill">{money(bill.totalBill)}</td>
+                    <td className="font-semibold" data-label="Balance" style={{ color: "#d97d6e" }}>{money(bill.currentBalance)}</td>
+                    <td data-label="Status">
                       <BillStatusBadge status={bill.paymentStatus} />
                     </td>
                   </tr>

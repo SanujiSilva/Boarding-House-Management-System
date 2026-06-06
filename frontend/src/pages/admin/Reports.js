@@ -61,20 +61,20 @@ const Reports = () => {
           </div>
           <section className="panel">
             <div className="table-wrap">
-              <table className="data-table">
+              <table className="data-table mobile-cards">
                 <thead><tr><th>Room</th><th>Boarder</th><th>Monthly Rent</th><th>Electricity Fee</th><th>Previous Balance (+/-)</th><th>Total</th><th>Paid</th><th>Unpaid Balance</th><th>Status</th></tr></thead>
                 <tbody>
                   {(data.bills || []).map((bill) => (
                     <tr key={bill._id}>
-                      <td>{bill.roomNumber}</td>
-                      <td>{bill.customerName}</td>
-                      <td>{money(bill.roomFee)}</td>
-                      <td>{money(bill.electricityBill)}</td>
-                      <td>{signedMoney(bill.previousMonthBalance)}</td>
-                      <td>{money(bill.totalBill)}</td>
-                      <td>{money(bill.totalPaidAmount)}</td>
-                      <td>{money(Math.max(Number(bill.currentBalance || 0), 0))}</td>
-                      <td><BillStatusBadge status={bill.paymentStatus} /></td>
+                      <td data-label="Room">{bill.roomNumber}</td>
+                      <td data-label="Boarder">{bill.customerName}</td>
+                      <td data-label="Monthly Rent">{money(bill.roomFee)}</td>
+                      <td data-label="Electricity Fee">{money(bill.electricityBill)}</td>
+                      <td data-label="Previous Balance">{signedMoney(bill.previousMonthBalance)}</td>
+                      <td data-label="Total">{money(bill.totalBill)}</td>
+                      <td data-label="Paid">{money(bill.totalPaidAmount)}</td>
+                      <td data-label="Unpaid Balance">{money(Math.max(Number(bill.currentBalance || 0), 0))}</td>
+                      <td data-label="Status"><BillStatusBadge status={bill.paymentStatus} /></td>
                     </tr>
                   ))}
                   {!data.bills?.length && <tr><td colSpan="9">No room bills found for this month and year.</td></tr>}

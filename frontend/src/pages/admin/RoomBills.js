@@ -189,20 +189,20 @@ const RoomBills = () => {
           <section className="panel">
             <h3 className="mb-3 text-lg font-black">Previous Room Bills</h3>
             <div className="table-wrap">
-              <table className="data-table">
+              <table className="data-table mobile-cards">
                 <thead><tr><th>Month</th><th>Monthly Rent</th><th>Electricity Fee</th><th>Previous Balance (+/-)</th><th>Total</th><th>Paid</th><th>Balance/Credit</th><th>Status</th><th>Action</th></tr></thead>
                 <tbody>
                   {bills.map((bill) => (
                     <tr key={bill._id}>
-                      <td>{monthLabel(bill.month)} / {bill.year}</td>
-                      <td>{money(bill.roomFee)}</td>
-                      <td>{money(bill.electricityBill)}</td>
-                      <td>{signedMoney(bill.previousMonthBalance)}</td>
-                      <td>{money(bill.totalBill)}</td>
-                      <td>{money(bill.totalPaidAmount)}</td>
-                      <td>{signedMoney(bill.currentBalance)}</td>
-                      <td><BillStatusBadge status={bill.paymentStatus} /></td>
-                      <td><button className="btn secondary" type="button" onClick={() => { setSelectedBillId(bill._id); setShowPayment(false); }}>View</button></td>
+                      <td data-label="Month">{monthLabel(bill.month)} / {bill.year}</td>
+                      <td data-label="Monthly Rent">{money(bill.roomFee)}</td>
+                      <td data-label="Electricity Fee">{money(bill.electricityBill)}</td>
+                      <td data-label="Previous Balance">{signedMoney(bill.previousMonthBalance)}</td>
+                      <td data-label="Total">{money(bill.totalBill)}</td>
+                      <td data-label="Paid">{money(bill.totalPaidAmount)}</td>
+                      <td data-label="Balance/Credit">{signedMoney(bill.currentBalance)}</td>
+                      <td data-label="Status"><BillStatusBadge status={bill.paymentStatus} /></td>
+                      <td data-label="Action"><button className="btn secondary" type="button" onClick={() => { setSelectedBillId(bill._id); setShowPayment(false); }}>View</button></td>
                     </tr>
                   ))}
                   {!bills.length && <tr><td colSpan="9">No bills found for this room.</td></tr>}

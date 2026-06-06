@@ -60,24 +60,24 @@ const CustomerDetails = () => {
       <section className="panel">
         <h3 className="mb-3 text-lg font-black">Room Bill History</h3>
         <div className="table-wrap">
-          <table className="data-table">
+          <table className="data-table mobile-cards">
             <thead><tr><th>Month</th><th>Year</th><th>Monthly Rent</th><th>Electricity Fee</th><th>Previous Balance (+/-)</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th></tr></thead>
-            <tbody>{bills.map((bill) => <tr key={bill._id}><td>{monthLabel(bill.month)}</td><td>{bill.year}</td><td>{money(bill.roomFee)}</td><td>{money(bill.electricityBill)}</td><td>{signedMoney(bill.previousMonthBalance)}</td><td>{money(bill.totalBill)}</td><td>{money(bill.totalPaidAmount)}</td><td>{signedMoney(bill.currentBalance)}</td><td><BillStatusBadge status={bill.paymentStatus} /></td></tr>)}</tbody>
+            <tbody>{bills.map((bill) => <tr key={bill._id}><td data-label="Month">{monthLabel(bill.month)}</td><td data-label="Year">{bill.year}</td><td data-label="Monthly Rent">{money(bill.roomFee)}</td><td data-label="Electricity Fee">{money(bill.electricityBill)}</td><td data-label="Previous Balance">{signedMoney(bill.previousMonthBalance)}</td><td data-label="Total">{money(bill.totalBill)}</td><td data-label="Paid">{money(bill.totalPaidAmount)}</td><td data-label="Balance">{signedMoney(bill.currentBalance)}</td><td data-label="Status"><BillStatusBadge status={bill.paymentStatus} /></td></tr>)}</tbody>
           </table>
         </div>
       </section>
       <section className="panel mt-5">
         <h3 className="mb-3 text-lg font-black">Previous Members In This Room</h3>
         <div className="table-wrap">
-          <table className="data-table">
+          <table className="data-table mobile-cards">
             <thead><tr><th>Name</th><th>Phone</th><th>NIC</th><th>Last Updated</th></tr></thead>
             <tbody>
               {previousMembers.map((member) => (
                 <tr key={member._id}>
-                  <td>{member.name}</td>
-                  <td>{member.phoneNumber}</td>
-                  <td>{member.nicNumber}</td>
-                  <td>{new Date(member.updatedAt).toLocaleDateString()}</td>
+                  <td data-label="Name">{member.name}</td>
+                  <td data-label="Phone">{member.phoneNumber}</td>
+                  <td data-label="NIC">{member.nicNumber}</td>
+                  <td data-label="Last Updated">{new Date(member.updatedAt).toLocaleDateString()}</td>
                 </tr>
               ))}
               {!previousMembers.length && <tr><td colSpan="4">No previous members found for this room.</td></tr>}

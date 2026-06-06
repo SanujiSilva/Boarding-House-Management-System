@@ -56,7 +56,7 @@ const MyRoomBills = () => {
         {/* Bills Table */}
         {bills.length > 0 ? (
           <div className="table-wrap">
-            <table className="data-table">
+            <table className="data-table mobile-cards">
               <thead>
                 <tr>
                   <th>Month</th>
@@ -75,19 +75,19 @@ const MyRoomBills = () => {
               <tbody>
                 {bills.map((bill) => (
                   <tr key={bill._id}>
-                    <td className="font-semibold">{monthLabel(bill.month)}</td>
-                    <td>{bill.year}</td>
-                    <td>{bill.roomNumber}</td>
-                    <td>{money(bill.roomFee)}</td>
-                    <td className="text-center">{bill.electricityUsedUnits}</td>
-                    <td>{money(bill.electricityBill)}</td>
-                    <td style={{ color: "#c9a961" }}>{signedMoney(bill.previousMonthBalance)}</td>
-                    <td className="font-semibold">{money(bill.totalBill)}</td>
-                    <td style={{ color: "#6ba88f", fontWeight: "600" }}>{money(bill.totalPaidAmount)}</td>
-                    <td style={{ fontWeight: "600", color: bill.currentBalance > 0 ? "#d97d6e" : "#6ba88f" }}>
+                    <td className="font-semibold" data-label="Month">{monthLabel(bill.month)}</td>
+                    <td data-label="Year">{bill.year}</td>
+                    <td data-label="Room">{bill.roomNumber}</td>
+                    <td data-label="Rent">{money(bill.roomFee)}</td>
+                    <td className="text-center" data-label="Units">{bill.electricityUsedUnits}</td>
+                    <td data-label="Electricity">{money(bill.electricityBill)}</td>
+                    <td data-label="Previous" style={{ color: "#c9a961" }}>{signedMoney(bill.previousMonthBalance)}</td>
+                    <td className="font-semibold" data-label="Total">{money(bill.totalBill)}</td>
+                    <td data-label="Paid" style={{ color: "#6ba88f", fontWeight: "600" }}>{money(bill.totalPaidAmount)}</td>
+                    <td data-label="Balance" style={{ fontWeight: "600", color: bill.currentBalance > 0 ? "#d97d6e" : "#6ba88f" }}>
                       {signedMoney(bill.currentBalance)}
                     </td>
-                    <td>
+                    <td data-label="Status">
                       <BillStatusBadge status={bill.paymentStatus} />
                     </td>
                   </tr>

@@ -34,7 +34,7 @@ const CustomerSidebar = () => {
       </nav>
       <button className="logout-btn" onClick={logout}>
         <LogOut size={18} />
-        Logout
+        <span>Logout</span>
       </button>
     </aside>
   );
