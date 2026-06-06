@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Building2, LogIn } from "lucide-react";
+import { Building2, Eye, EyeOff, LogIn } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
@@ -8,6 +8,7 @@ const Login = ({ role = "admin" }) => {
   const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const isAdmin = role === "admin";
 
   const submit = async (e) => {
@@ -64,7 +65,24 @@ const Login = ({ role = "admin" }) => {
           </label>
           <label className="field">
             <span>{isAdmin ? "Password" : "Phone Number"}</span>
-            <input className="input" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
+            <div className="relative">
+              <input
+                className="input pr-12"
+                type={showPassword ? "text" : "password"}
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                required
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-leaf"
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                title={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </label>
           <button className="btn" disabled={loading}>
             <LogIn size={18} />

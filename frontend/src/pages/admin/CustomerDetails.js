@@ -12,6 +12,11 @@ const signedMoney = (value) => {
   return money(0);
 };
 
+const formatDate = (value) => {
+  if (!value) return "-";
+  return new Date(value).toLocaleDateString();
+};
+
 const CustomerDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
@@ -42,6 +47,7 @@ const CustomerDetails = () => {
           <p><b>Relationship:</b> {customer.relationship || "-"}</p>
           <p><b>Job:</b> {customer.job || "-"}</p>
           <p><b>Married Status:</b> {customer.marriedStatus || "-"}</p>
+          <p><b>Registered Date:</b> {formatDate(customer.createdAt)}</p>
           <p><b>Room Fee:</b> {money(customer.roomFee)}</p>
           <p><b>Login Username:</b> {customer.email || customer.userId?.username || "-"}</p>
           <p><b>Initial Password:</b> Phone number</p>

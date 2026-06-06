@@ -57,6 +57,11 @@ const AddCustomer = () => {
     setShowForm(true);
   };
 
+  const formatDate = (value) => {
+    if (!value) return "-";
+    return new Date(value).toLocaleDateString();
+  };
+
   const submit = async (e) => {
     e.preventDefault();
     setError("");
@@ -124,7 +129,7 @@ const AddCustomer = () => {
           <h3 className="mb-3 text-lg font-black">Boarders In This Room</h3>
           <div className="table-wrap">
             <table className="data-table">
-              <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>WhatsApp</th><th>NIC</th><th>Relationship</th><th>Job</th><th>Status</th></tr></thead>
+              <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>WhatsApp</th><th>NIC</th><th>Relationship</th><th>Job</th><th>Registered Date</th><th>Status</th></tr></thead>
               <tbody>
                 {roomBoarders.map((boarder) => (
                   <tr key={boarder._id}>
@@ -135,10 +140,11 @@ const AddCustomer = () => {
                     <td>{boarder.nicNumber}</td>
                     <td>{boarder.relationship || "-"}</td>
                     <td>{boarder.job || "-"}</td>
+                    <td>{formatDate(boarder.createdAt)}</td>
                     <td>{boarder.isActive ? "Active" : "Inactive"}</td>
                   </tr>
                 ))}
-                {!roomBoarders.length && <tr><td colSpan="8">No boarders registered in this room yet.</td></tr>}
+                {!roomBoarders.length && <tr><td colSpan="9">No boarders registered in this room yet.</td></tr>}
               </tbody>
             </table>
           </div>
